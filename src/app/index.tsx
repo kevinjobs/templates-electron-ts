@@ -9,7 +9,7 @@ import {
   selectCount,
 } from "@store/slices/couter.slice";
 import store, { AppDispatch } from "@store/index";
-import Api from "../api";
+import {fetchUserInfo} from "@api/user";
 import HomePage from "@pages/home";
 import NotFound from "@pages/not-found";
 
@@ -52,7 +52,7 @@ function App() {
       </div>
       <div>
         <button onClick={() => {
-          Api.getInfo().then((res: { code: number; msg: string }) => setApiData(res));
+          fetchUserInfo().then((res: { code: number; msg: string }) => setApiData(res));
         }}>api: get</button>
         <span>code: { apiData?.code }, msg: { apiData?.msg }</span>
       </div>
