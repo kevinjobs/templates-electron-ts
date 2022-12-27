@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import {Routes, Route, Link} from "react-router-dom";
 import {
   decrement,
   increment,
@@ -9,6 +10,8 @@ import {
 } from "@store/slices/couter.slice";
 import store, { AppDispatch } from "@store/index";
 import Api from "../api";
+import HomePage from "@pages/home";
+import NotFound from "@pages/not-found";
 
 function AppSon() {
   const count = useSelector(selectCount);
@@ -52,6 +55,16 @@ function App() {
           Api.getInfo().then((res: { code: number; msg: string }) => setApiData(res));
         }}>api: get</button>
         <span>code: { apiData?.code }, msg: { apiData?.msg }</span>
+      </div>
+      <div>
+        <h3>Routes</h3>
+        <Link to={"/home"}>Home</Link>
+        <Link to={"/blog"}>Blog</Link>
+        <Link to={"/about"}>About</Link>
+        <Routes>
+          <Route element={<HomePage />} path={"/home"} />
+          <Route element={<NotFound />} path={"*"} />
+        </Routes>
       </div>
     </div>
   );
