@@ -24,10 +24,6 @@ const alias = {
 }
 
 const rules = () => {
-  const plugins = ['@babel/plugin-transform-runtime'];
-  
-  if (isDev) plugins.push('react-refresh/babel');
-
   return [
     {
       test: /\.(ts|tsx)$/,
@@ -41,7 +37,12 @@ const rules = () => {
             '@babel/preset-react',
             '@babel/preset-typescript',
           ],
-          plugins,
+          plugins: (() => {
+            // 使用一个立即执行函数来返回 plugin 列表
+            const plugins = ['@babel/plugin-transform-runtime'];
+            if (isDev) plugins.push('react-refresh/babel');
+            return plugins;
+          })(),
         }
       }
     },
@@ -108,6 +109,7 @@ const devServer = {
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
+  context: path.resolve('..'),
   entry: {
     app: path.join(srcPath, 'index.tsx'),
   },
