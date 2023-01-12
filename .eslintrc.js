@@ -17,7 +17,7 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react", "@typescript-eslint"],
-  ignorePatterns: [".eslintrc.js", "webpack/*", "start.js", 'webpack.config.js'],
+  ignorePatterns: [".eslintrc.js", "scripts/*", 'config/*'],
   rules: {
     indent: ["error", 2],
     // "linebreak-style": ["error", "unix"],

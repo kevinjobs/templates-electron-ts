@@ -9,9 +9,9 @@ const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-const distPath = path.resolve(__dirname, './dist');
-const srcPath = path.resolve(__dirname, './src');
-const publicPath = path.resolve(__dirname, './public');
+const distPath = path.resolve(__dirname, '../dist');
+const srcPath = path.resolve(__dirname, '../src');
+const publicPath = path.resolve(__dirname, '../public');
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
 
@@ -25,6 +25,7 @@ const alias = {
 
 const rules = () => {
   const plugins = ['@babel/plugin-transform-runtime'];
+  
   if (isDev) plugins.push('react-refresh/babel');
 
   return [
@@ -60,7 +61,7 @@ const plugins = () => {
   const results = [
     new HtmlWebpackPlugin({ template: `${publicPath}/index.html` }),
     new ESLintPlugin({
-      context: path.join(__dirname, "../src"),
+      context: srcPath,
       extensions: ["tsx", "ts"],
     }),
   ];
