@@ -2,6 +2,7 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -9,9 +10,10 @@ const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-const distPath = path.resolve(__dirname, '../dist');
-const srcPath = path.resolve(__dirname, '../src');
-const publicPath = path.resolve(__dirname, '../public');
+const projectPath = path.resolve(__dirname, '..');
+const distPath = path.join(projectPath, 'dist');
+const srcPath = path.join(projectPath, 'src');
+const publicPath = path.join(projectPath, 'public');
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
 
@@ -29,26 +31,29 @@ const rules = () => {
       test: /\.(ts|tsx)$/,
       include: [srcPath],
       exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            '@babel/preset-env',
-            '@babel/preset-react',
-            '@babel/preset-typescript',
-          ],
-          plugins: (() => {
-            // 使用一个立即执行函数来返回 plugin 列表
-            const plugins = ['@babel/plugin-transform-runtime'];
-            if (isDev) plugins.push('react-refresh/babel');
-            return plugins;
-          })(),
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+              '@babel/preset-typescript',
+            ],
+            plugins: (() => {
+              // 使用一个立即执行函数来返回 plugin 列表
+              const plugins = ['@babel/plugin-transform-runtime'];
+              if (isDev) plugins.push('react-refresh/babel');
+              return plugins;
+            })(),
+          }
         }
-      }
+      ]
     },
     {
       test: /\.less$/,
       include: [srcPath],
+      exclude: /node_modules/,
       use: [
         isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
         "css-loader",
@@ -109,7 +114,7 @@ const devServer = {
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  context: path.resolve('..'),
+  context: projectPath,
   entry: {
     app: path.join(srcPath, 'index.tsx'),
   },
@@ -126,5 +131,24 @@ module.exports = {
     rules: rules(),
   },
   plugins: plugins(),
+  cache: {
+    type: 'filesystem',
+  },
+  optimization: {
+    minimizer: [
+      '...',
+      new CssMinimizerPlugin(),
+    ],
+    splitChunks: {
+      minSize: 20000,
+      cacheGroups: {
+        react: {
+          test: /(react|react-dom)/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   devServer: isDev ? devServer : {},
 }
