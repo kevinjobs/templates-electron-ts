@@ -8,7 +8,7 @@ importers:
     devDependencies:
       concurrently: 7.6.0
 
-  packages/electron-react-typescript:
+  packages/electron:
     specifiers:
       '@rollup/plugin-typescript': ^11.0.0
       cross-env: ^7.0.3
@@ -22,7 +22,7 @@ importers:
       reflect-metadata: 0.1.13
       rollup: 3.10.0
 
-  packages/react-typescript:
+  packages/web:
     specifiers:
       '@babel/core': ^7.17.10
       '@babel/plugin-transform-runtime': ^7.17.10
@@ -1687,7 +1687,7 @@ packages:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
       '@types/eslint': 8.4.10
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.0
     dev: true
 
   /@types/eslint/8.4.10:
