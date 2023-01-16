@@ -27,7 +27,7 @@ async function createWindow() {
   const eipc = new Eipc(w.webContents, channels, [MyHandler]);
   await eipc.init();
 
-  if (isDev) w.loadURL("http://localhost:9000/").then();
+  if (isDev) w.loadURL("http://localhost:9526/").then();
   // 生产环境应使用相对地址
   // 打包后的根目录为 app/
   else w.loadFile("./dist/index.html").then();

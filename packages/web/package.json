@@ -1,5 +1,5 @@
 {
-  "name": "react-ts",
+  "name": "template-web",
   "scripts": {
     "start": "node ./scripts/dev.js",
     "build": "rimraf dist && node ./scripts/build.js",

@@ -4,7 +4,7 @@
   "description": "some web front templates",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"pnpm -F template-web start\" \"pnpm -F template-electron start\""
   },
   "repository": {
     "type": "git",
@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/kevinjobs/templates/issues"
   },
-  "homepage": "https://github.com/kevinjobs/templates#readme"
+  "homepage": "https://github.com/kevinjobs/templates#readme",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
 }

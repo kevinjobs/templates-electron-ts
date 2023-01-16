@@ -103,11 +103,11 @@ const devServer = {
   },
   // 启用gzip 压缩
   compress: true,
-  port: 9000,
+  port: 9526,
   // 启用webpack的模块热替换
   hot: true,
   // 服务器已经启动后打开默认的浏览器
-  open: true,
+  open: false,
   // 代理---处理跨域转发
   proxy: {}
 }
