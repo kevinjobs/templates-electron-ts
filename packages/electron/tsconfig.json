@@ -22,6 +22,9 @@
       "resolveJsonModule": true,  //是否允许把json文件当做模块进行解析
       "isolatedModules": true,
       "noEmit": true,
+      "paths": {
+        "tslib": ["node_modules/tslib/tslib.d.ts"]
+      }
   },
   "include": [
       "src/**/*",
