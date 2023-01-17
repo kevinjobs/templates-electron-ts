@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "concurrently \"pnpm build\" \"pnpm dev\"",
+    "start": "pnpm build && pnpm dev",
     "dev": "cross-env NODE_ENV=development electron ./dist/main.js",
     "build": "rollup -c rollup.config.mjs"
   },
@@ -18,6 +18,8 @@
   "author": "Kevin Jobs <me@kevinjobs.com>",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^11.0.0",
     "cross-env": "^7.0.3",
     "electron": "latest",

@@ -2,7 +2,7 @@ import React from "react";
 
 import RouterExample from "./router.example";
 // only in electron renderer process
-// import IpcExample from "./ipc.example";
+import IpcExample from "./ipc.example";
 import ReduxExample from "./redux.example";
 import ApiExample from "./api.example";
 import HotLoaderExample from "./hot-loader.example";
@@ -19,7 +19,7 @@ function App() {
       <RouterExample />
       <hr />
       {/* only in electron renderer process */}
-      {/* <IpcExample /> */}
+      { window.ipc && <IpcExample /> }
     </div>
   );
 }

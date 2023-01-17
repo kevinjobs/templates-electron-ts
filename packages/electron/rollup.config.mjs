@@ -1,11 +1,16 @@
 import { defineConfig } from 'rollup';
 import typescript from '@rollup/plugin-typescript';
+import nodeResolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 
 export default defineConfig([
   {
     input: 'src/index.ts',
+    external: ['electron'],
     plugins: [
       typescript(),
+      nodeResolve(),
+      commonjs(),
     ],
     output: [
       {
@@ -17,7 +22,11 @@ export default defineConfig([
   },
   {
     input: 'src/preload.ts',
-    plugins: [typescript()],
+    external: ['electron'],
+    plugins: [
+      typescript(),
+      commonjs(),
+    ],
     output: [
       {
         name: 'preload',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { sendMsg, receiveMsg } from '@api/index';
+import { sendMsg, receiveMsg } from '@api/ipc.api';
 
 export default function IpcExample() {
   const [ipcMsg, setIpcMsg] = React.useState('');
