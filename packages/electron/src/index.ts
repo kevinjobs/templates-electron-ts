@@ -7,45 +7,9 @@ import MyHandler from "./handlers/my-handler";
 
 const isDev = process.env["NODE_ENV"] === "development";
 
-async function createWindow() {
-  const w = new BrowserWindow({
-    width: 1000,
-    height: 600,
-    // frame: true,
-    resizable: true,
-    // movable: true,
-    // transparent: true,
-    webPreferences: {
-      preload: path.resolve(__dirname, "preload.js"),
-      nodeIntegration: false,
-      contextIsolation: true, // this config make react use electron.
-      webSecurity: true,
-    },
-  });
-
-  // to-do: auto import handler from handlers dir
-  const eipc = new Eipc(w.webContents, channels, [MyHandler]);
-  await eipc.init();
-
-  if (isDev) w.loadURL("http://localhost:9526/").then();
-  // 生产环境应使用相对地址
-  // 打包后的根目录为 app/
-  else w.loadFile("./dist/index.html").then();
-
-  if (isDev) w.webContents.openDevTools();
-
-  w.on("closed", () => {
-    w.destroy();
-    eipc.destory();
-  })
-
-  return w;
-}
-
 app.whenReady().then(() => {
   // create main window
-  // const mainWindow = createWindow();
-  createWindow()
+  createWindow();
 
   // only in macOS
   app.on("activate", function () {
@@ -56,7 +20,56 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", function () {
+  // even if you close all windows,
+  // the app will not quit in macOS.
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
+
+/**
+ * create electron window
+ * @returns electron BrowserWindow
+ */
+async function createWindow() {
+  const w = new BrowserWindow({
+    width: 1000,
+    height: 600,
+    resizable: true,
+    // movable: true,
+    // frame: true,
+    // transparent: true,
+    webPreferences: {
+      // import and export the ipc method in preload process.
+      preload: path.resolve(__dirname, "preload.js"),
+      // set below three items to true to make more safe.
+      // when you set them true,
+      // you cannot use electron in renderer process.
+      nodeIntegration: false,
+      contextIsolation: true,
+      webSecurity: true,
+    },
+  });
+
+  // to-do: auto import handler from handlers dir
+  const eipc = new Eipc(w.webContents, channels, [MyHandler]);
+  await eipc.init();
+
+  if (isDev) {
+    await w.loadURL(`http://localhost:${process.env.NODE_ENV || 9526}/`);
+    // open the chrome dev tools when in development mode.
+    w.webContents.openDevTools();
+  } else {
+    // 生产环境应使用相对地址
+    // 打包后的根目录为 app/
+    await w.loadFile("./dist/index.html");
+  }
+
+  w.on("closed", () => {
+    w.destroy();
+    // destory all ipc event handlers.
+    eipc.destory();
+  })
+
+  return w;
+}
