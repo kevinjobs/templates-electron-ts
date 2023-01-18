@@ -2,7 +2,7 @@
   "compilerOptions": {
       "target": "ES2015",
       "useDefineForClassFields": true,
-      "lib": ["DOM", "DOM.Iterable", "ESNext"],
+      "lib": ["ES2015"],
       "allowJs": false,
       "skipLibCheck": true,
       // 允许export=导出，由import from 导入

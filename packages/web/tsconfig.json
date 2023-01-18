@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-      "target": "ESNext",
+      "target": "ES2015",
       "useDefineForClassFields": true,
-      "lib": ["DOM", "DOM.Iterable", "ESNext"],
+      "lib": ["DOM", "DOM.Iterable", "ES2015"],
       "allowJs": false,
       "skipLibCheck": false,
       // 允许export=导出，由import from 导入
@@ -14,11 +14,10 @@
       "alwaysStrict": true, // 在代码中注入'use strict'
       // 禁止对同一个文件的不一致的引用
       "forceConsistentCasingInFileNames": true,
-      "module": "ESNext",
+      "module": "ES2015",
       "moduleResolution": "Node",
       "noUnusedLocals": false, // 检查只声明、未使用的局部变量(只提示不报错)
       "importHelpers": true, // 通过tslib引入helper函数，文件必须是模块
-      "experimentalDecorators": true,  // 启用实验性的ES装饰器。
       "resolveJsonModule": true,  //是否允许把json文件当做模块进行解析
       "isolatedModules": true,
       "noEmit": true,
