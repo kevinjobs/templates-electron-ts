@@ -1,19 +1,13 @@
 import React from 'react';
-import {Routes, Route, Link} from "react-router-dom";
-import HomePage from "@pages/home";
+import {Routes, Route } from "react-router-dom";
 import NotFound from "@pages/not-found";
+import Gerer from '@pages/perer';
 
 export default function RouterExample() {
   return (
-    <div>
-      <h3>Routes</h3>
-      <Link to={"/home"}>Home</Link>
-      <Link to={"/blog"}>Blog</Link>
-      <Link to={"/about"}>About</Link>
-      <Routes>
-        <Route element={<HomePage />} path={"/home"} />
-        <Route element={<NotFound />} path={"*"} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route element={<Gerer />} path={'*'} />
+      <Route element={<NotFound />} path={"*"} />
+    </Routes>
   )
 }
