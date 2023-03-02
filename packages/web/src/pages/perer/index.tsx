@@ -25,6 +25,12 @@ const Gerer: React.FC = () => {
     case "3":
       nav("/role");
       break;
+    case '4':
+      nav("/project");
+      break;
+    case '5':
+      nav('/submit');
+      break;
     default:
       nav("/cadre");
     }

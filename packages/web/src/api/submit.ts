@@ -5,8 +5,8 @@ const HOST = 'localhost'
 const PORT = 5000
 
 
-export async function getRoleList() {
-  const url =  `http://${HOST}:${PORT}/api/roles`;
+export async function getSubmitList() {
+  const url =  `http://${HOST}:${PORT}/api/submits`;
   const resp = await axios({
     method: 'get',
     url: url,
@@ -15,8 +15,8 @@ export async function getRoleList() {
 }
 
 
-export async function addRole(data) {
-  const url =  `http://${HOST}:${PORT}/api/role`;
+export async function addSubmit(data) {
+  const url =  `http://${HOST}:${PORT}/api/submit`;
   const resp = await axios({
     method: 'post',
     url: url,
@@ -25,8 +25,8 @@ export async function addRole(data) {
   return resp;
 }
 
-export async function delRole(uid: string) {
-  const url =  `http://${HOST}:${PORT}/api/role?uid=${uid}`;
+export async function delSubmit(uid: string) {
+  const url =  `http://${HOST}:${PORT}/api/submit?uid=${uid}`;
   const resp = await axios({
     method: 'delete',
     url: url,

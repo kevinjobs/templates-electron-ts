@@ -24,3 +24,12 @@ export async function addDepartment(data) {
   });
   return resp;
 }
+
+export async function delDepartment(uid: string) {
+  const url =  `http://${HOST}:${PORT}/api/department?uid=${uid}`;
+  const resp = await axios({
+    method: 'delete',
+    url: url,
+  });
+  return resp;
+}

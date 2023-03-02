@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Space, Table, message } from "antd";
+import { Button, Space, Table, message, Popconfirm } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import AddOne from "./_add";
 import { PERERS } from "./_config";
@@ -9,7 +9,9 @@ export interface MyPererProps {
   current: string;
 }
 
-export default function MyPerer<T extends object>(props: MyPererProps) {
+export default function MyPerer<T extends { uid: string }>(
+  props: MyPererProps
+) {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [selected, setSelected] = React.useState<{
@@ -52,7 +54,27 @@ export default function MyPerer<T extends object>(props: MyPererProps) {
       .get()
       .then((resp) => {
         if (resp.data.code === 0) {
-          setList(resp.data.data as T[]);
+          const results = [];
+          const datas = resp.data.data;
+          for (const data of datas) {
+            const d = { ...data };
+            for (const k in data) {
+              if (data[k] instanceof Object) {
+                d[k] = d[k]?.name || d[k]?.title;
+              }
+
+              if (data[k] instanceof Array) {
+                const list = (d[k] = data[k]);
+                const vs = [];
+                for (const l of list) {
+                  vs.push(l.name || l.title);
+                }
+                d[k] = vs.join(",");
+              }
+            }
+            results.push(d);
+          }
+          setList(results as T[]);
         }
       })
       .catch((err) => {
@@ -71,16 +93,14 @@ export default function MyPerer<T extends object>(props: MyPererProps) {
           <Button
             size="small"
             onClick={() => {
-              const data = {...record};
+              const data = { ...record };
               for (const v in record) {
-                if (v === 'birthday') {
+                if (v === "birthday") {
                   (data[v] as dayjs.Dayjs) = dayjs(record[v] as string);
                 } else {
                   data[v] = record[v];
                 }
               }
-
-              console.log(data);
 
               setSelected({
                 ...selected,
@@ -92,9 +112,31 @@ export default function MyPerer<T extends object>(props: MyPererProps) {
           >
             <EditOutlined />
           </Button>
-          <Button size="small" danger>
-            <DeleteOutlined />
-          </Button>
+          <Popconfirm
+            title="删除"
+            description="确定要删除该项吗？"
+            onConfirm={() => {
+              PERERS[props.current]
+                ?.del(record.uid)
+                .then((resp) => {
+                  if (resp.data.code === 0) {
+                    messageApi.success("删除成功");
+                    refresh();
+                  } else {
+                    messageApi.error("删除失败");
+                  }
+                })
+                .catch((err) => {
+                  messageApi.error("删除出错: " + err);
+                });
+            }}
+            okText='是'
+            cancelText='否'
+          >
+            <Button size="small" danger>
+              <DeleteOutlined />
+            </Button>
+          </Popconfirm>
         </Space>
       ),
     });
@@ -113,7 +155,7 @@ export default function MyPerer<T extends object>(props: MyPererProps) {
           type="primary"
           onClick={() => setSelected({ isOpen: true, type: "add" })}
         >
-          添加{PERERS[props.current].title}
+          添加{PERERS[props.current]?.title}
         </Button>
       </div>
       <Table

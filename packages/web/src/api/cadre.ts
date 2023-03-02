@@ -23,3 +23,12 @@ export async function addCadre(data) {
   });
   return resp;
 }
+
+export async function delCadre(uid: string) {
+  const url =  `http://${HOST}:${PORT}/api/cadre?uid=${uid}`;
+  const resp = await axios({
+    method: 'delete',
+    url: url,
+  });
+  return resp;
+}
