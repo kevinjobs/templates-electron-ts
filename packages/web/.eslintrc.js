@@ -25,6 +25,7 @@ module.exports = {
   ignorePatterns: [".eslintrc.js", "scripts/*", 'config/*'],
   rules: {
     indent: ["error", 2],
+    "@typescript-eslint/no-explicit-any": "off"
     // "linebreak-style": ["error", "unix"],
     // quotes: ["error", "double"],
   },

@@ -1,18 +1,15 @@
 import React from "react";
 import { Layout, Menu } from "antd";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-
-import MyPerer from "./_perer";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./style.less";
 import { MENU_ITEMS } from './_config';
+import Submit from "./submit";
 
 
 const { Header, Content, Sider } = Layout;
 
 const Gerer: React.FC = () => {
   const nav = useNavigate();
-  const location = useLocation();
-  const [current, setCurrent] = React.useState('cadre');
 
   const handleClickMenuItem = (menuInfo) => {
     switch (menuInfo.key) {
@@ -36,38 +33,26 @@ const Gerer: React.FC = () => {
     }
   };
 
-  React.useEffect(() => {
-    const { pathname } = location;
-    const parts = pathname.split('/');
-    const c = parts.pop();
-    setCurrent(c);
-  }, [location]);
-
   return (
     <Layout className="page-perer">
-      <Layout>
-        <Header className="page-perer-header">
-          <p>hello</p>
-        </Header>
-        <Layout>
-          <Sider className="page-perer-left">
-            <Menu
-              onClick={handleClickMenuItem}
-              defaultSelectedKeys={["2"]}
-              defaultOpenKeys={["sub1"]}
-              mode="inline"
-              items={MENU_ITEMS}
-            />
-          </Sider>
-          <Content className="page-perer-right">
-            <Routes>
-              <Route
-                path={current}
-                element={<MyPerer current={current} />}
-              />
-            </Routes>
-          </Content>
-        </Layout>
+      <Header className="page-perer-header">
+        <p>hello</p>
+      </Header>
+      <Layout className="page-perer-container">
+        <Sider className="page-perer-left">
+          <Menu
+            onClick={handleClickMenuItem}
+            defaultSelectedKeys={["2"]}
+            defaultOpenKeys={["sub1"]}
+            mode="inline"
+            items={MENU_ITEMS}
+          />
+        </Sider>
+        <Content className="page-perer-right">
+          <Routes>
+            <Route path='submit' element={<Submit />} />
+          </Routes>
+        </Content>
       </Layout>
     </Layout>
   );

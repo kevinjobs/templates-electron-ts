@@ -20,6 +20,7 @@ module.exports = {
   ignorePatterns: [".eslintrc.js", "webpack/*", "start.js", "config/", "dist/", "out/"],
   rules: {
     indent: ["error", 2],
+    "@typescript-eslint/no-explicit-any": "off"
     // "linebreak-style": ["error", "unix"],
     // quotes: ["error", "double"],
   },
