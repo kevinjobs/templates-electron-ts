@@ -116,7 +116,7 @@ export default function Submit() {
       key: "name",
     },
     {
-      title: "作者",
+      title: "包含人员",
       dataIndex: "cadresAvatar",
       key: "cadresAvatar",
     },

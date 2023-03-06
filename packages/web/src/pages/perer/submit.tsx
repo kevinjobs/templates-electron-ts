@@ -16,6 +16,7 @@ import { getCadreList } from "@api/cadre";
 import { getProjectList } from "@api/project";
 import renderPureForm from "./_form";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
 
 interface OriginalSubmitType {
   uid: string;
@@ -51,7 +52,7 @@ interface FormSubmitType {
 const transformData = (raw: OriginalSubmitType): TableSubmitType => {
   return {
     uid: raw.uid,
-    upload_at: raw.upload_at,
+    upload_at: dayjs(raw.upload_at).format('YYYY-MM-DD'),
     title: raw.title,
     project_title: raw.project.title,
     cadres: raw.cadres.map((cadre) => cadre.name),
