@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import "./style.less";
 import { MENU_ITEMS } from './_config';
 import Submit from "./submit";
+import Role from './role';
 
 
 const { Header, Content, Sider } = Layout;
@@ -51,6 +52,7 @@ const Gerer: React.FC = () => {
         <Content className="page-perer-right">
           <Routes>
             <Route path='submit' element={<Submit />} />
+            <Route path='role' element={<Role />} />
           </Routes>
         </Content>
       </Layout>
