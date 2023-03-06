@@ -33,7 +33,6 @@ interface TableRoleType {
 interface FormRoleType {
   uid: string;
   name: string;
-  cadres: string[];
 }
 
 const transformData = (raw: OriginalRoleType): TableRoleType => {
@@ -71,10 +70,7 @@ export default function Submit() {
   };
 
   const handleSubmit = (value: FormRoleType) => {
-    const roleData = {
-      name: value.name,
-      cadres: value.cadres.join(','),
-    };
+    const roleData = { name: value.name };
 
     if (update) {
       // to-do: update
