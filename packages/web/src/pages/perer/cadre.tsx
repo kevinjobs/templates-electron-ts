@@ -9,12 +9,12 @@ import {
   message,
   Space,
   Popconfirm,
-  DatePicker
+  DatePicker,
 } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import 'dayjs/locale/zh-cn';
-import locale from 'antd/es/date-picker/locale/zh_CN';
+import "dayjs/locale/zh-cn";
+import locale from "antd/es/date-picker/locale/zh_CN";
 import { getCadreList, delCadre, addCadre } from "@api/cadre";
 import { getDepartmentList } from "@api/department";
 import renderPureForm from "./_form";
@@ -57,11 +57,15 @@ interface FormCadreType {
   role_name: string;
 }
 
-const SubmitList = ({items}: {items: OriginalCadreType['submits']}) => {
+const SubmitList = ({ items }: { items: OriginalCadreType["submits"] }) => {
   // to-do: 点击可以跳转查看文章
   return (
     <div>
-      {items.map(item => <div key={item.uid}><a>{item.title}</a></div>)}
+      {items.map((item) => (
+        <div key={item.uid}>
+          <a>{item.title}</a>
+        </div>
+      ))}
     </div>
   );
 };
@@ -263,20 +267,36 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
             <Input disabled />
           </Form.Item>
         )}
-        <Form.Item label="姓名" name="name" key="name">
+        <Form.Item
+          label="姓名"
+          name="name"
+          key="name"
+          rules={[{ required: true }]}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="生日" name="birthday" key="birthday">
+        <Form.Item
+          label="生日"
+          name="birthday"
+          key="birthday"
+          rules={[{ required: true }]}
+        >
           <DatePicker picker="month" locale={locale} />
         </Form.Item>
         <Form.Item
           label="所在部门"
           name="department_name"
           key="department_name"
+          rules={[{ required: true }]}
         >
           <Select showSearch options={departs} />
         </Form.Item>
-        <Form.Item label="所属角色" name="role_name" key="role_name">
+        <Form.Item
+          label="所属角色"
+          name="role_name"
+          key="role_name"
+          rules={[{ required: true }]}
+        >
           <Select showSearch options={roles} />
         </Form.Item>
       </>

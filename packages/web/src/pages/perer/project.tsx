@@ -225,16 +225,16 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
             <Input disabled />
           </Form.Item>
         )}
-        <Form.Item label="项目标题" name="title" key="title">
+        <Form.Item label="项目标题" name="title" key="title" rules={[{required: true}]}>
           <Input />
         </Form.Item>
-        <Form.Item label="组织者" name="organiger" key="organiger">
+        <Form.Item label="组织者" name="organiger" key="organiger" rules={[{required: true}]}>
           <Input />
         </Form.Item>
-        <Form.Item label="截止日期" name="deadline" key="deadline">
+        <Form.Item label="截止日期" name="deadline" key="deadline" rules={[{required: true}]}>
           <DatePicker locale={locale} />
         </Form.Item>
-        <Form.Item label="联系方式" name="contact" key="contact">
+        <Form.Item label="联系方式" name="contact" key="contact" rules={[{required: true}]}>
           <Input />
         </Form.Item>
       </>

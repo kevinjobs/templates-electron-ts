@@ -43,7 +43,7 @@ const transformData = (raw: OriginalRoleType): TableRoleType => {
     name: raw.name,
     cadres: raw.cadres.map((cadre) => cadre.name),
     cadresAvatar: raw.cadres.map((cadre) => (
-      <Avatar shape="square" key={cadre.name} style={{margin: '2px'}}>
+      <Avatar shape="square" key={cadre.name} style={{ margin: "2px" }}>
         {cadre.name}
       </Avatar>
     )),
@@ -208,7 +208,12 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
             <Input disabled />
           </Form.Item>
         )}
-        <Form.Item label="名称" name="name" key="name">
+        <Form.Item
+          label="名称"
+          name="name"
+          key="name"
+          rules={[{ required: true }]}
+        >
           <Input />
         </Form.Item>
       </>

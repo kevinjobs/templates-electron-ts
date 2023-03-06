@@ -227,10 +227,20 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
             <Input disabled />
           </Form.Item>
         )}
-        <Form.Item label="名称" name="name" key="name">
+        <Form.Item
+          label="名称"
+          name="name"
+          key="name"
+          rules={[{ required: true }]}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="完整名称" name="fullname" key="fullname">
+        <Form.Item
+          label="完整名称"
+          name="fullname"
+          key="fullname"
+          rules={[{ required: true }]}
+        >
           <Input />
         </Form.Item>
       </>

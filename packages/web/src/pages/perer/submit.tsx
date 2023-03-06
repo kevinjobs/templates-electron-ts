@@ -243,13 +243,28 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
             <Input disabled />
           </Form.Item>
         )}
-        <Form.Item label="项目" name="project_title" key="project_title">
+        <Form.Item
+          label="项目"
+          name="project_title"
+          key="project_title"
+          rules={[{ required: true }]}
+        >
           <Select showSearch options={projects} />
         </Form.Item>
-        <Form.Item label="标题" name="title" key="title">
+        <Form.Item
+          label="标题"
+          name="title"
+          key="title"
+          rules={[{ required: true }]}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="作者" name="cadres" key="cadres">
+        <Form.Item
+          label="作者"
+          name="cadres"
+          key="cadres"
+          rules={[{ required: true }]}
+        >
           <Select
             showSearch
             options={cadres}
