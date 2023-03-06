@@ -10,9 +10,9 @@ import {
   Popconfirm,
   Avatar,
 } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { getRoleList, delRole, addRole } from "@api/role";
 import renderPureForm from "./_form";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 interface OriginalRoleType {
   uid: string;

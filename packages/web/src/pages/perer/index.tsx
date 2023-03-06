@@ -5,6 +5,7 @@ import "./style.less";
 import { MENU_ITEMS } from './_config';
 import Submit from "./submit";
 import Role from './role';
+import Project from './project';
 
 
 const { Header, Content, Sider } = Layout;
@@ -43,7 +44,7 @@ const Gerer: React.FC = () => {
         <Sider className="page-perer-left">
           <Menu
             onClick={handleClickMenuItem}
-            defaultSelectedKeys={["2"]}
+            defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
             mode="inline"
             items={MENU_ITEMS}
@@ -53,6 +54,7 @@ const Gerer: React.FC = () => {
           <Routes>
             <Route path='submit' element={<Submit />} />
             <Route path='role' element={<Role />} />
+            <Route path='project' element={<Project />} />
           </Routes>
         </Content>
       </Layout>

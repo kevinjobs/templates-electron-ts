@@ -2,81 +2,58 @@ import React from "react";
 import {
   Table,
   Form,
-  Select,
   Input,
   Modal,
   Button,
   message,
   Space,
   Popconfirm,
-  Avatar,
+  DatePicker
 } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { getSubmitList, delSubmit, addSubmit } from "@api/submit";
-import { getCadreList } from "@api/cadre";
-import { getProjectList } from "@api/project";
+import { getProjectList, delProject, addProject } from "@api/project";
 import renderPureForm from "./_form";
 
-interface OriginalSubmitType {
+interface OriginalProjectType {
   uid: string;
-  upload_at: string;
+  create_at: number | string;
   title: string;
-  project: {
-    uid: string;
-    title: string;
-  };
-  cadres: {
-    uid: string;
-    name: string;
-  }[];
+  organiger: string;
+  deadline: string | number;
+  contact: string;
 }
 
-interface TableSubmitType {
+type TableProjectType = OriginalProjectType;
+
+interface FormProjectType {
   uid: string;
-  upload_at: string;
   title: string;
-  project_title: string;
-  cadres: string[];
-  cadresAvatar: React.ReactNode;
+  organiger: string;
+  deadline: dayjs.Dayjs;
+  contact: string;
 }
 
-interface FormSubmitType {
-  uid: string;
-  upload_at: string;
-  title: string;
-  project_title: string;
-  cadres: string[];
-}
-
-const transformData = (raw: OriginalSubmitType): TableSubmitType => {
-  return {
-    uid: raw.uid,
-    upload_at: dayjs(raw.upload_at).format('YYYY-MM-DD'),
-    title: raw.title,
-    project_title: raw.project.title,
-    cadres: raw.cadres.map((cadre) => cadre.name),
-    cadresAvatar: raw.cadres.map((cadre) => (
-      <Avatar shape="square" key={cadre.name} style={{margin: '0 2px'}}>
-        {cadre.name}
-      </Avatar>
-    )),
-  };
+const transformData = (raw: OriginalProjectType): TableProjectType => {
+  const data = {...raw};
+  data['key'] = data['uid'];
+  data['create_at'] = dayjs(data['create_at']).format('YYYY-MM-DD');
+  return data;
 };
 
 export default function Submit() {
   const [msgApi, ctxHolder] = message.useMessage();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [update, setUpdate] = React.useState(false);
-  const [select, setSelect] = React.useState<FormSubmitType>();
-  const [submits, setSubmits] = React.useState<TableSubmitType[]>([]);
+  const [select, setSelect] = React.useState<FormProjectType>();
+  const [submits, setSubmits] = React.useState<TableProjectType[]>([]);
 
   React.useEffect(() => {
-    refreshSubmitList();
+    refreshProjectList();
   }, []);
 
-  const refreshSubmitList = () => {
-    getSubmitList()
+  const refreshProjectList = () => {
+    getProjectList()
       .then((res) => {
         if (res.data.code === 0) {
           setSubmits(res.data.data.map((submit) => transformData(submit)));
@@ -85,23 +62,25 @@ export default function Submit() {
       .catch((err) => console.log(err));
   };
 
-  const handleSubmit = (value: FormSubmitType) => {
+  const handleSubmit = (value: FormProjectType) => {
     const submitData = {
-      project_title: value.project_title,
+      uid: value.uid,
       title: value.title,
-      cadres: value.cadres.join(','),
+      organiger: value.organiger,
+      deadline: value.deadline.format('YYYY-MM-DD'),
+      contact: value.contact,
     };
 
     if (update) {
       // to-do: update
       console.log(submitData);
     } else {
-      addSubmit(submitData)
+      addProject(submitData)
         .then((res) => {
           if (res.data.code === 0) {
             msgApi.success(res.data.msgCN);
             setModalOpen(false);
-            refreshSubmitList();
+            refreshProjectList();
           }
         })
         .catch((err) => {
@@ -111,12 +90,12 @@ export default function Submit() {
     }
   };
 
-  const handleDelete = (value: TableSubmitType) => {
-    delSubmit(value.uid)
+  const handleDelete = (value: TableProjectType) => {
+    delProject(value.uid)
       .then((res) => {
         if (res.data.code === 0) {
           msgApi.success(res.data.msgCN);
-          refreshSubmitList();
+          refreshProjectList();
         }
       })
       .catch((err) => {
@@ -131,9 +110,9 @@ export default function Submit() {
       key: "uid",
     },
     {
-      title: "提交日期",
-      dataIndex: "upload_at",
-      key: "uploadAt",
+      title: "添加日期",
+      dataIndex: "create_at",
+      key: "create_at",
     },
     {
       title: "标题",
@@ -141,33 +120,39 @@ export default function Submit() {
       key: "title",
     },
     {
-      title: "项目",
-      dataIndex: "project_title",
-      key: "project_title",
+      title: "组织者",
+      dataIndex: "organiger",
+      key: "organiger",
     },
     {
-      title: "作者",
-      dataIndex: "cadresAvatar",
-      key: "cadresAvatar",
+      title: "截止日期",
+      dataIndex: "deadline",
+      key: "deadline",
+    },
+    {
+      title: "联系方式",
+      dataIndex: "contact",
+      key: "contact",
     },
     {
       title: "操作",
       dataIndex: "operate",
       key: "operete",
-      render: (_, value: TableSubmitType) => (
+      render: (_, value: TableProjectType) => (
         <Space size="middle">
           <Button
             size="small"
             onClick={() => {
               setUpdate(true);
               setModalOpen(true);
-              const newData = {} as FormSubmitType;
-              newData["uid"] = value.uid;
-              newData["title"] = value.title;
-              // newData['upload_at'] = value.upload_at;
-              newData["project_title"] = value.project_title;
-              newData["cadres"] = value.cadres;
-              setSelect(newData);
+              const data: FormProjectType = {
+                uid: value.uid,
+                title: value.title,
+                organiger: value.organiger,
+                deadline: dayjs(value.deadline),
+                contact: value.contact,
+              };
+              setSelect(data);
             }}
           >
             <EditOutlined />
@@ -197,7 +182,7 @@ export default function Submit() {
           setModalOpen(true);
         }}
       >
-        新增文章
+        新增项目
       </Button>
       <Table
         columns={COLUMNS}
@@ -208,7 +193,7 @@ export default function Submit() {
       />
       {ctxHolder}
       <Modal
-        title={"添加新文章"}
+        title={"添加新项目"}
         open={modalOpen}
         closable={false}
         okButtonProps={{ style: { display: "none" } }}
@@ -230,55 +215,29 @@ export default function Submit() {
 }
 
 function SubmitForm({ onCancel, onFinish, update, initialValues }) {
-  const [projects, setProject] = React.useState();
-  const [cadres, setCadres] = React.useState([]);
-
   const Items = () => {
     return (
       <>
-        <Form.Item label="项目" name="project_title" key="project_title">
-          <Select showSearch options={projects} />
+        <Form.Item label="UID" name="uid" key="uid">
+          <Input disabled placeholder="自动生成，无法更改" />
         </Form.Item>
-        <Form.Item label="标题" name="title" key="title">
+        <Form.Item label="项目标题" name="title" key="title">
           <Input />
         </Form.Item>
-        <Form.Item label="作者" name="cadres" key="cadres">
-          <Select
-            showSearch
-            options={cadres}
-            mode="multiple"
-            placeholder="可以选择多个作者"
-          />
+        <Form.Item label="组织者" name="organiger" key="organiger">
+          <Input />
+        </Form.Item>
+        <Form.Item label="截止日期" name="deadline" key="deadline">
+          <DatePicker />
+        </Form.Item>
+        <Form.Item label="联系方式" name="contact" key="contact">
+          <Input />
         </Form.Item>
       </>
     );
   };
 
-  React.useEffect(() => {
-    getProjectList()
-      .then((res) => {
-        if (res.data.code === 0) {
-          const data = res.data.data;
-          setProject(
-            data.map((d) => ({ label: d["title"], value: d["title"] }))
-          );
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  React.useEffect(() => {
-    getCadreList()
-      .then((res) => {
-        if (res.data.code === 0) {
-          const data = res.data.data;
-          setCadres(data.map((d) => ({ label: d["name"], value: d["name"] })));
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  return renderPureForm<TableSubmitType>({
+  return renderPureForm<TableProjectType>({
     title: "新增提交",
     children: <Items />,
     onCancel: onCancel,
