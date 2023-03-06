@@ -6,6 +6,7 @@ import { MENU_ITEMS } from './_config';
 import Submit from "./submit";
 import Role from './role';
 import Project from './project';
+import Department from './department';
 
 
 const { Header, Content, Sider } = Layout;
@@ -55,6 +56,7 @@ const Gerer: React.FC = () => {
             <Route path='submit' element={<Submit />} />
             <Route path='role' element={<Role />} />
             <Route path='project' element={<Project />} />
+            <Route path='department' element={<Department />} />
           </Routes>
         </Content>
       </Layout>
