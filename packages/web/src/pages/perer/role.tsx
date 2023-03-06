@@ -189,7 +189,10 @@ export default function Submit() {
       >
         <SubmitForm
           onFinish={handleSubmit}
-          onCancel={() => setModalOpen(false)}
+          onCancel={() => {
+            setSelect(null);
+            setModalOpen(false);
+          }}
           update={update}
           initialValues={select}
         />
