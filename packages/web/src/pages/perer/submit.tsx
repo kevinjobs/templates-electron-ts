@@ -33,6 +33,7 @@ interface OriginalSubmitType {
 }
 
 interface TableSubmitType {
+  key: string;
   uid: string;
   upload_at: string;
   title: string;
@@ -51,13 +52,14 @@ interface FormSubmitType {
 
 const transformData = (raw: OriginalSubmitType): TableSubmitType => {
   return {
+    key: raw.uid,
     uid: raw.uid,
-    upload_at: dayjs(raw.upload_at).format('YYYY-MM-DD'),
+    upload_at: dayjs(raw.upload_at).format("YYYY-MM-DD"),
     title: raw.title,
     project_title: raw.project.title,
     cadres: raw.cadres.map((cadre) => cadre.name),
     cadresAvatar: raw.cadres.map((cadre) => (
-      <Avatar shape="square" key={cadre.name} style={{margin: '0 2px'}}>
+      <Avatar shape="square" key={cadre.name} style={{ margin: "0 2px" }}>
         {cadre.name}
       </Avatar>
     )),
@@ -89,7 +91,7 @@ export default function Submit() {
     const submitData = {
       project_title: value.project_title,
       title: value.title,
-      cadres: value.cadres.join(','),
+      cadres: value.cadres.join(","),
     };
 
     if (update) {
@@ -236,6 +238,11 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
   const Items = () => {
     return (
       <>
+        {update && (
+          <Form.Item label="UID" name="uid" key="uid">
+            <Input disabled />
+          </Form.Item>
+        )}
         <Form.Item label="项目" name="project_title" key="project_title">
           <Select showSearch options={projects} />
         </Form.Item>

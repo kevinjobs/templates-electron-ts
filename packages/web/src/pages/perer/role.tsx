@@ -24,6 +24,7 @@ interface OriginalRoleType {
 }
 
 interface TableRoleType {
+  key: string;
   uid: string;
   name: string;
   cadres: string[];
@@ -37,6 +38,7 @@ interface FormRoleType {
 
 const transformData = (raw: OriginalRoleType): TableRoleType => {
   return {
+    key: raw.uid,
     uid: raw.uid,
     name: raw.name,
     cadres: raw.cadres.map((cadre) => cadre.name),
@@ -201,6 +203,11 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
   const Items = () => {
     return (
       <>
+        {update && (
+          <Form.Item label="UID" name="uid" key="uid">
+            <Input disabled />
+          </Form.Item>
+        )}
         <Form.Item label="名称" name="name" key="name">
           <Input />
         </Form.Item>

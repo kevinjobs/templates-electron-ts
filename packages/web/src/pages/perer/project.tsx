@@ -218,9 +218,11 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
   const Items = () => {
     return (
       <>
-        <Form.Item label="UID" name="uid" key="uid">
-          <Input disabled placeholder="自动生成，无法更改" />
-        </Form.Item>
+        {update && (
+          <Form.Item label="UID" name="uid" key="uid">
+            <Input disabled />
+          </Form.Item>
+        )}
         <Form.Item label="项目标题" name="title" key="title">
           <Input />
         </Form.Item>
