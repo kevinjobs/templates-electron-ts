@@ -173,7 +173,7 @@ export default function Submit() {
         columns={COLUMNS}
         dataSource={roles}
         loading={roles.length === 0}
-        pagination={{ pageSize: 12 }}
+        pagination={{ pageSize: 10 }}
         style={{ marginTop: 24 }}
       />
       {ctxHolder}

@@ -9,60 +9,74 @@ import {
   message,
   Space,
   Popconfirm,
-  Avatar,
+  DatePicker
 } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { getSubmitList, delSubmit, addSubmit } from "@api/submit";
-import { getCadreList } from "@api/cadre";
-import { getProjectList } from "@api/project";
+import 'dayjs/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
+import { getCadreList, delCadre, addCadre } from "@api/cadre";
+import { getDepartmentList } from "@api/department";
 import renderPureForm from "./_form";
+import { getRoleList } from "@api/role";
 
-interface OriginalSubmitType {
+interface OriginalCadreType {
   uid: string;
-  upload_at: string;
-  title: string;
-  project: {
-    uid: string;
-    title: string;
-  };
-  cadres: {
+  name: string;
+  birthday: string;
+  department: {
     uid: string;
     name: string;
+  };
+  role: {
+    uid: string;
+    name: string;
+  };
+  submits: {
+    uid: string;
+    title: string;
   }[];
 }
 
-interface TableSubmitType {
+interface TableCadreType {
   key: string;
   uid: string;
-  upload_at: string;
-  title: string;
-  project_title: string;
-  cadres: string[];
-  cadresAvatar: React.ReactNode;
+  name: string;
+  birthday: string;
+  department_name: string;
+  role_name: string;
+  submits: string[];
+  submitsList: React.ReactNode;
 }
 
-interface FormSubmitType {
+interface FormCadreType {
   uid: string;
-  upload_at: string;
-  title: string;
-  project_title: string;
-  cadres: string[];
+  name: string;
+  birthday: dayjs.Dayjs;
+  department_name: string;
+  role_name: string;
 }
 
-const transformData = (raw: OriginalSubmitType): TableSubmitType => {
+const SubmitList = ({items}: {items: OriginalCadreType['submits']}) => {
+  // to-do: 点击可以跳转查看文章
+  return (
+    <div>
+      {items.map(item => <div key={item.uid}><a>{item.title}</a></div>)}
+    </div>
+  );
+};
+
+const transformData = (raw: OriginalCadreType): TableCadreType => {
+  const submits = raw.submits.map((submit) => submit.title);
   return {
     key: raw.uid,
     uid: raw.uid,
-    upload_at: dayjs(raw.upload_at).format("YYYY-MM-DD"),
-    title: raw.title,
-    project_title: raw.project.title,
-    cadres: raw.cadres.map((cadre) => cadre.name),
-    cadresAvatar: raw.cadres.map((cadre) => (
-      <Avatar shape="square" key={cadre.name} style={{ margin: "0 2px" }}>
-        {cadre.name}
-      </Avatar>
-    )),
+    name: raw.name,
+    birthday: raw.birthday,
+    department_name: raw.department.name,
+    role_name: raw.role.name,
+    submits: submits,
+    submitsList: <SubmitList items={raw.submits} />,
   };
 };
 
@@ -70,15 +84,15 @@ export default function Submit() {
   const [msgApi, ctxHolder] = message.useMessage();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [update, setUpdate] = React.useState(false);
-  const [select, setSelect] = React.useState<FormSubmitType>();
-  const [submits, setSubmits] = React.useState<TableSubmitType[]>([]);
+  const [select, setSelect] = React.useState<FormCadreType>();
+  const [submits, setSubmits] = React.useState<TableCadreType[]>([]);
 
   React.useEffect(() => {
     refreshSubmitList();
   }, []);
 
   const refreshSubmitList = () => {
-    getSubmitList()
+    getCadreList()
       .then((res) => {
         if (res.data.code === 0) {
           setSubmits(res.data.data.map((submit) => transformData(submit)));
@@ -87,18 +101,19 @@ export default function Submit() {
       .catch((err) => console.log(err));
   };
 
-  const handleSubmit = (value: FormSubmitType) => {
+  const handleSubmit = (value: FormCadreType) => {
     const submitData = {
-      project_title: value.project_title,
-      title: value.title,
-      cadres: value.cadres.join(","),
+      name: value.name,
+      birthday: value.birthday.format("YYYY-MM"),
+      department_name: value.department_name,
+      role_name: value.role_name,
     };
 
     if (update) {
       // to-do: update
       console.log(submitData);
     } else {
-      addSubmit(submitData)
+      addCadre(submitData)
         .then((res) => {
           if (res.data.code === 0) {
             msgApi.success(res.data.msgCN);
@@ -113,8 +128,8 @@ export default function Submit() {
     }
   };
 
-  const handleDelete = (value: TableSubmitType) => {
-    delSubmit(value.uid)
+  const handleDelete = (value: TableCadreType) => {
+    delCadre(value.uid)
       .then((res) => {
         if (res.data.code === 0) {
           msgApi.success(res.data.msgCN);
@@ -133,42 +148,47 @@ export default function Submit() {
       key: "uid",
     },
     {
-      title: "提交日期",
-      dataIndex: "upload_at",
-      key: "uploadAt",
+      title: "姓名",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: "标题",
-      dataIndex: "title",
-      key: "title",
+      title: "生日",
+      dataIndex: "birthday",
+      key: "birthday",
     },
     {
-      title: "项目",
-      dataIndex: "project_title",
-      key: "project_title",
+      title: "所在部门",
+      dataIndex: "department_name",
+      key: "department_name",
     },
     {
-      title: "作者",
-      dataIndex: "cadresAvatar",
-      key: "cadresAvatar",
+      title: "角色",
+      dataIndex: "role_name",
+      key: "role_name",
+    },
+    {
+      title: "提交文章列表",
+      dataIndex: "submitsList",
+      key: "submitsList",
     },
     {
       title: "操作",
       dataIndex: "operate",
       key: "operete",
-      render: (_, value: TableSubmitType) => (
+      render: (_, value: TableCadreType) => (
         <Space size="middle">
           <Button
             size="small"
             onClick={() => {
               setUpdate(true);
               setModalOpen(true);
-              const newData = {} as FormSubmitType;
+              const newData = {} as FormCadreType;
               newData["uid"] = value.uid;
-              newData["title"] = value.title;
-              // newData['upload_at'] = value.upload_at;
-              newData["project_title"] = value.project_title;
-              newData["cadres"] = value.cadres;
+              newData["name"] = value.name;
+              newData["birthday"] = dayjs(value.birthday);
+              newData["department_name"] = value.department_name;
+              newData["role_name"] = value.role_name;
               setSelect(newData);
             }}
           >
@@ -199,7 +219,7 @@ export default function Submit() {
           setModalOpen(true);
         }}
       >
-        新增文章
+        新增员工
       </Button>
       <Table
         columns={COLUMNS}
@@ -210,7 +230,7 @@ export default function Submit() {
       />
       {ctxHolder}
       <Modal
-        title={"添加新文章"}
+        title={"添加新员工"}
         open={modalOpen}
         closable={false}
         okButtonProps={{ style: { display: "none" } }}
@@ -232,8 +252,8 @@ export default function Submit() {
 }
 
 function SubmitForm({ onCancel, onFinish, update, initialValues }) {
-  const [projects, setProject] = React.useState();
-  const [cadres, setCadres] = React.useState([]);
+  const [departs, setDeparts] = React.useState([]);
+  const [roles, setRoles] = React.useState([]);
 
   const Items = () => {
     return (
@@ -243,49 +263,49 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
             <Input disabled />
           </Form.Item>
         )}
-        <Form.Item label="项目" name="project_title" key="project_title">
-          <Select showSearch options={projects} />
-        </Form.Item>
-        <Form.Item label="标题" name="title" key="title">
+        <Form.Item label="姓名" name="name" key="name">
           <Input />
         </Form.Item>
-        <Form.Item label="作者" name="cadres" key="cadres">
-          <Select
-            showSearch
-            options={cadres}
-            mode="multiple"
-            placeholder="可以选择多个作者"
-          />
+        <Form.Item label="生日" name="birthday" key="birthday">
+          <DatePicker picker="month" locale={locale} />
+        </Form.Item>
+        <Form.Item
+          label="所在部门"
+          name="department_name"
+          key="department_name"
+        >
+          <Select showSearch options={departs} />
+        </Form.Item>
+        <Form.Item label="所属角色" name="role_name" key="role_name">
+          <Select showSearch options={roles} />
         </Form.Item>
       </>
     );
   };
 
   React.useEffect(() => {
-    getProjectList()
+    getDepartmentList()
       .then((res) => {
         if (res.data.code === 0) {
           const data = res.data.data;
-          setProject(
-            data.map((d) => ({ label: d["title"], value: d["title"] }))
-          );
+          setDeparts(data.map((d) => ({ label: d["name"], value: d["name"] })));
         }
       })
       .catch((err) => console.log(err));
   }, []);
 
   React.useEffect(() => {
-    getCadreList()
+    getRoleList()
       .then((res) => {
         if (res.data.code === 0) {
           const data = res.data.data;
-          setCadres(data.map((d) => ({ label: d["name"], value: d["name"] })));
+          setRoles(data.map((d) => ({ label: d["name"], value: d["name"] })));
         }
       })
       .catch((err) => console.log(err));
   }, []);
 
-  return renderPureForm<TableSubmitType>({
+  return renderPureForm<TableCadreType>({
     title: "新增提交",
     children: <Items />,
     onCancel: onCancel,

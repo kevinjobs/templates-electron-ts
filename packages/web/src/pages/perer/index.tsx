@@ -7,7 +7,7 @@ import Submit from "./submit";
 import Role from './role';
 import Project from './project';
 import Department from './department';
-
+import Cadre from './cadre';
 
 const { Header, Content, Sider } = Layout;
 
@@ -53,6 +53,7 @@ const Gerer: React.FC = () => {
         </Sider>
         <Content className="page-perer-right">
           <Routes>
+            <Route path='cadre' element={<Cadre />} />
             <Route path='submit' element={<Submit />} />
             <Route path='role' element={<Role />} />
             <Route path='project' element={<Project />} />

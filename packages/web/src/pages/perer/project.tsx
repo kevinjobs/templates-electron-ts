@@ -12,6 +12,8 @@ import {
 } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+import 'dayjs/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
 import { getProjectList, delProject, addProject } from "@api/project";
 import renderPureForm from "./_form";
 
@@ -188,7 +190,7 @@ export default function Submit() {
         columns={COLUMNS}
         dataSource={submits}
         loading={submits.length === 0}
-        pagination={{ pageSize: 12 }}
+        pagination={{ pageSize: 10 }}
         style={{ marginTop: 24 }}
       />
       {ctxHolder}
@@ -230,7 +232,7 @@ function SubmitForm({ onCancel, onFinish, update, initialValues }) {
           <Input />
         </Form.Item>
         <Form.Item label="截止日期" name="deadline" key="deadline">
-          <DatePicker />
+          <DatePicker locale={locale} />
         </Form.Item>
         <Form.Item label="联系方式" name="contact" key="contact">
           <Input />
