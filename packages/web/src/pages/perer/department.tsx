@@ -10,7 +10,7 @@ import {
   Popconfirm,
   Avatar,
 } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   getDepartmentList,
   delDepartment,
@@ -186,7 +186,7 @@ export default function Submit() {
           setModalOpen(true);
         }}
       >
-        新增部门
+        <PlusOutlined />新增部门
       </Button>
       <Table
         columns={COLUMNS}

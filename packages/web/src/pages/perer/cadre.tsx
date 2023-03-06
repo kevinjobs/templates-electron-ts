@@ -11,7 +11,7 @@ import {
   Popconfirm,
   DatePicker,
 } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 import locale from "antd/es/date-picker/locale/zh_CN";
@@ -223,7 +223,7 @@ export default function Submit() {
           setModalOpen(true);
         }}
       >
-        新增员工
+        <PlusOutlined />新增员工
       </Button>
       <Table
         columns={COLUMNS}

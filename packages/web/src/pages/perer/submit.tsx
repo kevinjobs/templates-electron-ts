@@ -11,7 +11,7 @@ import {
   Popconfirm,
   Avatar,
 } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { getSubmitList, delSubmit, addSubmit } from "@api/submit";
 import { getCadreList } from "@api/cadre";
@@ -199,7 +199,7 @@ export default function Submit() {
           setModalOpen(true);
         }}
       >
-        新增文章
+        <PlusOutlined />新增文章
       </Button>
       <Table
         columns={COLUMNS}

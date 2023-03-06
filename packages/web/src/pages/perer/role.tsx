@@ -10,7 +10,7 @@ import {
   Popconfirm,
   Avatar,
 } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { getRoleList, delRole, addRole } from "@api/role";
 import renderPureForm from "./_form";
 
@@ -167,7 +167,7 @@ export default function Submit() {
           setModalOpen(true);
         }}
       >
-        新增角色
+        <PlusOutlined />新增角色
       </Button>
       <Table
         columns={COLUMNS}
