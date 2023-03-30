@@ -1,5 +1,5 @@
-import channels from "../channels";
-import Eipc from "../eipc";
+import CHANNELS from "../channels";
+import Eipc from "usine-eipc";
 import { MyService } from "../services/my-service";
 
 @Eipc.Handler()
@@ -8,12 +8,12 @@ export default class MyHandler {
     // do nothing;
   }
 
-  @Eipc.On(channels.REPLY_MSG)
+  @Eipc.On(CHANNELS.replyMsg)
   public replyMsg(msg: string) {
     return `${this.myService.getDelayTime()} seconds later, the main process replies to your message: ${msg}`;
   }
 
-  @Eipc.Invoke(channels.SEND_MSG)
+  @Eipc.Invoke(CHANNELS.sendMsg)
   public async handleSendMsg(msg: string): Promise<string> {
     console.log("get the ", msg);
     setTimeout(() => {

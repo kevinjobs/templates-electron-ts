@@ -27,8 +27,5 @@
         "tslib": ["node_modules/tslib/tslib.d.ts"]
       }
   },
-  "include": [
-      "src/**/*",
-      "*.d.ts"//配置的.d.ts文件，用于定义一些 declare
-  ],
+  "include": ["src/**/*", "*.d.ts"],
 }

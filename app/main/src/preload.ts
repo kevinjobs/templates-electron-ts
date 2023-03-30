@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import channels from './channels';
+import CHANNELS from '../../const/channels.mjs';
 
 export type IPC = {
   sendMsg(msg: string): Promise<string>;
@@ -21,12 +21,12 @@ contextBridge.exposeInMainWorld("ipc", IPC_API);
 
 // ipc handles
 async function sendMsg(msg: string) {
-  return await ipcRenderer.invoke(channels.SEND_MSG, msg);
+  return await ipcRenderer.invoke(CHANNELS.sendMsg, msg);
 }
 
 async function receiveMsg():Promise<string> {
   return new Promise((res, rej) => {
-    ipcRenderer.on(channels.REPLY_MSG, (evt, msg: string) => {
+    ipcRenderer.on(CHANNELS.replyMsg, (evt, msg: string) => {
       res(msg);
     })
   })

@@ -1,9 +1,9 @@
 {
-  "name": "template-web",
+  "name": "example-views",
   "scripts": {
     "start": "node ./scripts/dev.js",
-    "build": "rimraf dist && node ./scripts/build.js",
-    "serve": "npm run build && serve ./dist"
+    "build": "node ./scripts/build.js",
+    "serve": "npm run build && serve ../../dist"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

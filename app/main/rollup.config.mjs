@@ -1,7 +1,9 @@
+import path from 'path';
 import { defineConfig } from 'rollup';
 import typescript from '@rollup/plugin-typescript';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import { DIST } from '../const/paths.mjs';
 
 export default defineConfig([
   {
@@ -15,7 +17,7 @@ export default defineConfig([
     output: [
       {
         name: 'main',
-        file: './dist/main.js',
+        file: path.join(DIST, 'main.js'),
         format: 'commonjs',
       },
     ]
@@ -30,7 +32,7 @@ export default defineConfig([
     output: [
       {
         name: 'preload',
-        file: './dist/preload.js',
+        file: path.join(DIST, 'preload.js'),
         format: 'commonjs',
       },
     ]

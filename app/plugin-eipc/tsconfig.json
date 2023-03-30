@@ -1,11 +1,10 @@
 {
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
       "target": "ES2015",
       "useDefineForClassFields": true,
-      "lib": ["DOM", "DOM.Iterable", "ES2015"],
+      "lib": ["ES2015"],
       "allowJs": false,
-      "skipLibCheck": false,
+      "skipLibCheck": true,
       // 允许export=导出，由import from 导入
       "esModuleInterop": true,
       // 允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。
@@ -18,13 +17,19 @@
       "moduleResolution": "Node",
       "noUnusedLocals": false, // 检查只声明、未使用的局部变量(只提示不报错)
       "importHelpers": true, // 通过tslib引入helper函数，文件必须是模块
+      "experimentalDecorators": true,  // 启用实验性的ES装饰器。
+      "emitDecoratorMetadata": true,
       "resolveJsonModule": true,  //是否允许把json文件当做模块进行解析
       "isolatedModules": true,
       "noEmit": true,
-      "jsx": "react-jsx"
+      "baseUrl": "./",
+      "declaration": true,
+      "outDir": "dist/",
+      "paths": {
+        "tslib": ["node_modules/tslib/tslib.d.ts"]
+      }
   },
   "include": [
-      "src/**/*",
-      "*.d.ts"//配置的.d.ts文件，用于定义一些 declare
+    "./index.ts",
   ],
 }

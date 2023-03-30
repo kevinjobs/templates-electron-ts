@@ -10,10 +10,10 @@ const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
-const projectPath = path.resolve(__dirname, '..');
-const distPath = path.join(projectPath, 'dist');
-const srcPath = path.join(projectPath, 'src');
-const publicPath = path.join(projectPath, 'public');
+const currentProjectPath = path.resolve(__dirname, '..');
+const distPath = path.join(currentProjectPath, '../../dist/views');
+const srcPath = path.join(currentProjectPath, 'src');
+const publicPath = path.join(currentProjectPath, 'public');
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
 
@@ -114,7 +114,7 @@ const devServer = {
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  context: projectPath,
+  context: currentProjectPath,
   entry: {
     app: path.join(srcPath, 'index.tsx'),
   },

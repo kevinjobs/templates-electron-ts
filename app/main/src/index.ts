@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { app, BrowserWindow } from "electron";
 import path from "path";
-import Eipc from "./eipc";
-import channels from "./channels";
+import Eipc from "usine-eipc";
+import CHANNELS from "./channels";
 import MyHandler from "./handlers/my-handler";
 
 const isDev = process.env["NODE_ENV"] === "development";
@@ -52,17 +52,17 @@ async function createWindow() {
   });
 
   // to-do: auto import handler from handlers dir
-  const eipc = new Eipc(w.webContents, channels, [MyHandler]);
+  const eipc = new Eipc(w.webContents, CHANNELS, [MyHandler]);
   await eipc.init();
 
   if (isDev) {
-    await w.loadURL(`http://localhost:${process.env.NODE_ENV || 9526}/`);
+    await w.loadURL(`http://localhost:${process.env.PORT || 9526}/`);
     // open the chrome dev tools when in development mode.
     w.webContents.openDevTools();
   } else {
     // 生产环境应使用相对地址
     // 打包后的根目录为 app/
-    await w.loadFile("./dist/index.html");
+    await w.loadFile("./views/index.html");
   }
 
   w.on("closed", () => {

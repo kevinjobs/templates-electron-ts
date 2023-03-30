@@ -5,10 +5,7 @@ export default function IpcExample() {
   const [ipcMsg, setIpcMsg] = React.useState('');
 
   React.useEffect(() => {
-    (async() => {
-      const msg = await receiveMsg();
-      setIpcMsg(msg);
-    })();
+    receiveMsg().then(msg => setIpcMsg(msg)).catch(console.error);
   }, []);
 
   return (
