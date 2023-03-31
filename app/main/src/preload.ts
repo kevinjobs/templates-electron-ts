@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import CHANNELS from '../../const/channels.mjs';
+import CHANNELS from './channels';
 
 export type IPC = {
   sendMsg(msg: string): Promise<string>;

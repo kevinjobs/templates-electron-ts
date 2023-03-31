@@ -8,4 +8,4 @@ export const PROJECT = path.resolve(DIRNAME, '../../');
 export const DIST = path.join(PROJECT, 'dist');
 export const APP = path.join(PROJECT, 'app');
 export const MAIN = path.join(APP, 'main');
-export const VIEWS = path.join(APP, 'views-react');
+export const VIEWS = path.join(APP, 'views');
