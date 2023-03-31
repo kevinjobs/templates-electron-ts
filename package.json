@@ -4,8 +4,8 @@
   "description": "electron example",
   "main": "index.js",
   "scripts": {
-    "cstart": "concurrently \"pnpm -F example-views start\" \"pnpm -F example-main start\"",
-    "start": "pnpm -F example-views start && pnpm -F example-main start"
+    "start": "pnpm -F example-views start && pnpm -F example-main start",
+    "build": "pnpm -F usine-* build && pnpm -F * build"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/kevinjobs/electron-example#readme",
   "devDependencies": {
-    "concurrently": "^7.6.0"
+    "shelljs": "^0.8.5"
   }
 }
