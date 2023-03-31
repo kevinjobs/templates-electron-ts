@@ -1,3 +1,0 @@
-function copyDirDeep() {}
-
-function delDirDeep() {}

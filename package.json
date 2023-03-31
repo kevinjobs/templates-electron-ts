@@ -2,10 +2,11 @@
   "name": "electron-example",
   "version": "0.0.1",
   "description": "electron example",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "pnpm -F example-views start && pnpm -F example-main start",
-    "build": "pnpm -F usine-* build && pnpm -F * build"
+    "build": "pnpm -F usine-* build && pnpm -F * build",
+    "package": "zx ./scripts/build.mjs"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/kevinjobs/electron-example#readme",
   "devDependencies": {
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.8.5",
+    "zx": "^7.2.1"
   }
 }
