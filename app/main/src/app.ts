@@ -73,7 +73,7 @@ class App {
     } else {
       // 生产环境应使用相对地址
       // 打包后的根目录为 app/
-      w.loadFile("./views/index.html").then().catch(console.error);
+      w.loadFile("./dist/views/index.html").then().catch(console.error);
     }
 
     w.on("closed", () => {

@@ -14,24 +14,11 @@ const resourcesPath = path.join(packagePath, 'resources');
 const appDistPath = path.join(resourcesPath, "dist");
 const appAsarPath = path.join(resourcesPath, "app");
 
+const electronUrl = 'https://registry.npmmirror.com/-/binary/electron/22.0.0/electron-v22.0.0-win32-x64.zip'
+
 await $`pnpm build`;
 
-// 查看 out 文件夹是否存在
-try {
-  const stats = await fs.stat(outPath);
-  if (!stats.isDirectory()) {
-    await $`mkdir ${outPath}`;
-  }
-} catch(err) {
-  await $`mkdir ${outPath}`;
-}
-// 拷贝原版 electron
-await $`cp -r ${electronPath} ${packagePath}`;
-// 拷贝前端代码
-await $`cp -r ${distPath} ${resourcesPath}`;
-// 将 dist 重命名为 app
-await $`mv ${appDistPath} ${appAsarPath}`;
-// 拷贝 package.json
-await $`cp package.json ${appAsarPath}`;
+await $`electron-forge package`;
+
 // 删除 dist 文件夹
 await $`rimraf ${distPath}`;
