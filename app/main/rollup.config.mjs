@@ -3,7 +3,9 @@ import { defineConfig } from 'rollup';
 import typescript from '@rollup/plugin-typescript';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import { DIST } from '../const/paths.mjs';
+
+// eslint-disable-next-line no-undef
+const distPath = process.env.DIST_PATH;
 
 export default defineConfig([
   {
@@ -17,7 +19,7 @@ export default defineConfig([
     output: [
       {
         name: 'main',
-        file: path.join(DIST, 'main.js'),
+        file: path.join(distPath, 'main.js'),
         format: 'commonjs',
       },
     ]
@@ -32,7 +34,7 @@ export default defineConfig([
     output: [
       {
         name: 'preload',
-        file: path.join(DIST, 'preload.js'),
+        file: path.join(distPath, 'preload.js'),
         format: 'commonjs',
       },
     ]

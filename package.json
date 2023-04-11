@@ -7,7 +7,8 @@
     "start": "zx ./scripts/dev.mjs",
     "build": "zx ./scripts/build.mjs",
     "package": "zx ./scripts/package.mjs",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "clear": "zx ./scripts/clear.mjs"
   },
   "repository": {
     "type": "git",
