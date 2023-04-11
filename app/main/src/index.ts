@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { BrowserWindow } from "electron";
-import Eipc from "usine-eipc";
+import Eipc from "eipc";
 import CHANNELS from "./channels";
 import MyHandler from "./handlers/my-handler";
 import { myapp } from './app';

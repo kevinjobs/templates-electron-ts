@@ -1,6 +1,6 @@
 packages:
   - 'app/const'
   - 'app/main'
-  - 'app/usine-eipc'
+  - 'app/eipc'
   - 'app/view-react'
   - 'app/view-vue'

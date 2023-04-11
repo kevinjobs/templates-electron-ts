@@ -31,6 +31,6 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
-    "usine-eipc": "workspace:*"
+    "eipc": "workspace:*"
   }
 }

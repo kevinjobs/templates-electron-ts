@@ -1,5 +1,5 @@
 import CHANNELS from "../channels";
-import Eipc from "usine-eipc";
+import Eipc from "eipc";
 import { MyService } from "../services/my-service";
 
 @Eipc.Handler()

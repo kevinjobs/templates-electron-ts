@@ -4,8 +4,8 @@
   "description": "electron example",
   "main": "./dist/main.js",
   "scripts": {
-    "start": "concurrently \"pnpm -F example-main start\" \"pnpm -F example-views start\"",
-    "build": "pnpm -F usine-* build && pnpm -F * build",
+    "start:react": "concurrently \"pnpm -F example-main start\" \"pnpm -F example-views start\"",
+    "build:react": "pnpm -F usine-* build && pnpm -F * build",
     "package": "zx ./scripts/package.mjs",
     "pure-package": "rimraf out && electron-forge package",
     "make": "electron-forge make"

@@ -1,4 +1,4 @@
-import Eipc from "usine-eipc";
+import Eipc from "eipc";
 
 @Eipc.Injectable("MyService")
 export class MyService {
