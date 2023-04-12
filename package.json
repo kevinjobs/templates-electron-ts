@@ -4,11 +4,10 @@
   "description": "electron example",
   "main": "./dist/main.js",
   "scripts": {
-    "start": "zx ./scripts/dev.mjs",
-    "build": "zx ./scripts/build.mjs",
-    "package": "zx ./scripts/package.mjs",
-    "make": "electron-forge make",
-    "clear": "zx ./scripts/clear.mjs"
+    "start": "zx ./scripts/scripts.mjs start",
+    "build": "zx ./scripts/scripts.mjs build",
+    "package": "zx ./scripts/scripts.mjs package",
+    "make": "electron-forge make"
   },
   "repository": {
     "type": "git",
