@@ -5,7 +5,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 
 // eslint-disable-next-line no-undef
-const distPath = process.env.DIST_PATH;
+const distPath = process.env.EE_DIST_PATH || './dist';
 
 export default defineConfig([
   {

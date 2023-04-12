@@ -8,12 +8,12 @@ async function buildMain() {
 }
 
 async function buildViews() {
-  await $`pnpm -F view-react build`;
-  await $`pnpm -F view-vue build`;
+  await $`pnpm -F view-home build`;
+  await $`pnpm -F view-setting build`;
 }
 
 export async function buildAll() {
   await buildEipc();
-  await buildMain();
   await buildViews();
+  await buildMain();
 }

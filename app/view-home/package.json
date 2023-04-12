@@ -1,5 +1,5 @@
 {
-  "name": "view-react",
+  "name": "view-home",
   "scripts": {
     "start": "zx ./scripts/dev.mjs",
     "dev": "zx ./scripts/dev.mjs",

@@ -6,9 +6,9 @@ import { packageAll } from './_pack.mjs';
 
 const args = process.argv.slice(3);
 
-const projectPath = process.env.PROJECT_PATH;
-const distPath = process.env.DIST_PATH;
-const outPath = process.env.OUT_PATH;
+const projectPath = process.env.EE_PROJECT_PATH;
+const distPath = process.env.EE_DIST_PATH;
+const outPath = process.env.EE_OUT_PATH;
 
 switch(args[0]) {
   case 'start':

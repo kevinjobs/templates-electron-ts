@@ -6,7 +6,7 @@ type Middleware = (win: BrowserWindow) => Promise<any>;
 class App {
   isDev = process.env["NODE_ENV"] === "development";
   port = process.env.PORT || 9526;
-  mainPage = './dist/views/index.html';
+  mainPage = './dist/view-home/index.html';
   win = null;
   middles: Middleware[] = [];
 

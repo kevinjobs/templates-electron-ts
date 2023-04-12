@@ -1,4 +1,5 @@
 const path = require('path');
+const packageJson = require('../package.json');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -12,7 +13,10 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const currentProjectPath = path.resolve(__dirname, '..');
 
-const viewsDistPath = process.env.VIEWS_DIST_PATH || path.join(currentProjectPath, 'dist');
+const distPath =
+  process.env.EE_DIST_PATH
+    ? path.join(process.env.EE_DIST_PATH, packageJson.name)
+    : path.join(currentProjectPath, 'dist');
 const srcPath = path.join(currentProjectPath, 'src');
 const publicPath = path.join(currentProjectPath, 'public');
 
@@ -79,7 +83,7 @@ const plugins = () => {
     }));
     results.push(new BundleAnalyzerPlugin({
       analyzerMode: "static",
-      reportFilename: path.join(viewsDistPath, "_bundle_report.html"),
+      reportFilename: path.join(distPath, "_bundle_report.html"),
       openAnalyzer: false,
     }));
   }
@@ -120,7 +124,7 @@ module.exports = {
     app: path.join(srcPath, 'index.tsx'),
   },
   output: {
-    path: viewsDistPath,
+    path: distPath,
     filename: '[name].[chunkhash:8].bundle.js',
     chunkFilename: 'chunk/[name].[chunkhash:8].js',
   },
