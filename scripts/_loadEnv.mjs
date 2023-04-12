@@ -11,3 +11,6 @@ process.env.DIST_PATH = distPath;
 process.env.VIEWS_DIST_PATH = viewsDistPath;
 process.env.OUT_PATH = outPath;
 process.env.PORT = 12345;
+
+process.env.EE_VIEW_SETTING_DIST_PATH = path.join(distPath, 'view-setting');
+process.env.EE_VIEW_SETTING_PORT = 12346;

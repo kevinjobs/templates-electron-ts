@@ -10,8 +10,6 @@ const projectPath = process.env.PROJECT_PATH;
 const distPath = process.env.DIST_PATH;
 const outPath = process.env.OUT_PATH;
 
-console.error(args);
-
 switch(args[0]) {
   case 'start':
     startView();

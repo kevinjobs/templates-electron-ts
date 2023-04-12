@@ -4,6 +4,7 @@ import CHANNELS from './channels';
 export type IPC = {
   sendMsg(msg: string): Promise<string>;
   receiveMsg(): Promise<string>;
+  openNewWindow(msg: string): Promise<boolean>;
 }
 
 declare global {
@@ -14,7 +15,8 @@ declare global {
 
 const IPC_API: IPC = {
   sendMsg,
-  receiveMsg
+  receiveMsg,
+  openNewWindow,
 }
 
 contextBridge.exposeInMainWorld("ipc", IPC_API);
@@ -30,4 +32,8 @@ async function receiveMsg():Promise<string> {
       res(msg);
     })
   })
+}
+
+async function openNewWindow(msg:string) {
+  return await ipcRenderer.invoke(CHANNELS.openNewWindow, msg);
 }

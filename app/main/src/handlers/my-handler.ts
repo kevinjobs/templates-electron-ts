@@ -22,4 +22,16 @@ export default class MyHandler {
 
     return `the main process received your message: ${msg}`;
   }
+
+  @Eipc.Invoke(CHANNELS.openNewWindow)
+  public async handleOpenNewWindow(msg: string): Promise<boolean> {
+    if (msg === 'setting') {
+      this.myService.openSettingWindow();
+      return true;
+    }
+    
+    if (msg === 'mini-player') {
+      return true;
+    }
+  }
 }
