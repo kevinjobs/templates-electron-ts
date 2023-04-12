@@ -12,9 +12,8 @@ export class MyService {
 
   public openSettingWindow() {
     const isDev = process.env.NODE_ENV === 'development';
-    const port = process.env.EE_VIEW_SETTING_PORT || 9527;
-    const settingPage =
-      process.env.EE_VIEW_SETTING_DIST_PATH || './dist/view-setting/index.html';
+    const port = process.env.EE_PORT_2 || 9527;
+    const settingPage = './dist/view-setting/index.html';
     const w = createSettingWindow();
 
     if (isDev) {
