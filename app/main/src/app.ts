@@ -6,13 +6,14 @@ type Middleware = (win: BrowserWindow) => Promise<any>;
 class App {
   isDev = process.env["NODE_ENV"] === "development";
   port = process.env.PORT || 9526;
+  mainPage = './dist/views/index.html';
   win = null;
   middles: Middleware[] = [];
 
   constructor(private electronApp: ElectronApp) {
     this.electronApp.whenReady().then(() => {
       // create main window
-      this.win = this.createWindow();
+      this.win = this.createMainWindow();
       this.listen();
 
       this.middles.forEach((mid) => {
@@ -25,7 +26,7 @@ class App {
     // only in macOS
     this.electronApp.on("activate", () => {
       if (BrowserWindow.getAllWindows().length === 0) {
-        this.win = this.createWindow();
+        this.win = this.createMainWindow();
       }
     });
 
@@ -46,7 +47,7 @@ class App {
    * create electron window
    * @returns electron BrowserWindow
    */
-  createWindow() {
+  createMainWindow() {
     const w = new BrowserWindow({
       width: 1000,
       height: 600,
@@ -73,7 +74,7 @@ class App {
     } else {
       // 生产环境应使用相对地址
       // 打包后的根目录为 app/
-      w.loadFile("./dist/views/index.html").then().catch(console.error);
+      w.loadFile(this.mainPage).then().catch(console.error);
     }
 
     w.on("closed", () => {

@@ -11,7 +11,8 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 
 const currentProjectPath = path.resolve(__dirname, '..');
-const distPath = path.join(currentProjectPath, '../../dist/views');
+
+const viewsDistPath = process.env.VIEWS_DIST_PATH || path.join(currentProjectPath, 'dist');
 const srcPath = path.join(currentProjectPath, 'src');
 const publicPath = path.join(currentProjectPath, 'public');
 
@@ -78,7 +79,7 @@ const plugins = () => {
     }));
     results.push(new BundleAnalyzerPlugin({
       analyzerMode: "static",
-      reportFilename: path.join(distPath, "_bundle_report.html"),
+      reportFilename: path.join(viewsDistPath, "_bundle_report.html"),
       openAnalyzer: false,
     }));
   }
@@ -119,7 +120,7 @@ module.exports = {
     app: path.join(srcPath, 'index.tsx'),
   },
   output: {
-    path: distPath,
+    path: viewsDistPath,
     filename: '[name].[chunkhash:8].bundle.js',
     chunkFilename: 'chunk/[name].[chunkhash:8].js',
   },

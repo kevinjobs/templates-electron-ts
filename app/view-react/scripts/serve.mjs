@@ -1,7 +1,6 @@
 #!/usr/bin/env zx
-import path from 'path';
-import { DIST } from '../../const/paths.mjs';
+const viewsDistPath = process.env.VIEWS_DIST_PATH || './dist';
 
 await $`pnpm run build`;
 
-await $`serve ${path.join(DIST, 'views')}`;
+await $`serve ${viewsDistPath}`;
