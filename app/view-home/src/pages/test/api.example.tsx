@@ -8,7 +8,7 @@ export default function ApiExample() {
     <div>
       <button onClick={() => {
         fetchUserInfo().then((res: { code: number; msg: string }) => setApiData(res));
-      }}>api: get</button>
+      }}>远程API测试</button>
       <span>code: { apiData?.code }, msg: { apiData?.msg }</span>
     </div>
   )

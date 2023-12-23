@@ -14,16 +14,13 @@ export default function ReduxExample() {
   const count = useSelector(selectCount);
   return (
     <div>
-      <p>测试 react-redux 的功能</p>
+      <p>测试 react-redux 的功能<div>{count}</div></p>
       <button onClick={() => dispatch(increment())}>+1</button>
       <button onClick={() => dispatch(decrement())}>-1</button>
       <button onClick={() => dispatch(incrementByAmount(10))}>+10</button>
       <button onClick={() => store.dispatch(incrementByAmountAsync(20))}>
         +20 Async (1000ms later)
       </button>
-      <div>
-        <div>{count}</div>
-      </div>
     </div>
   )
 }
