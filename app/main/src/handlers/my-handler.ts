@@ -10,7 +10,7 @@ export default class MyHandler {
 
   @Eipc.On(CHANNELS.replyMsg)
   public replyMsg(msg: string) {
-    return `${this.myService.getDelayTime()} seconds later, the main process replies to your message: ${msg}`;
+    return `${this.myService.getDelayTime()} 毫秒之后回复: ${msg}`;
   }
 
   @Eipc.Invoke(CHANNELS.sendMsg)
@@ -20,7 +20,7 @@ export default class MyHandler {
       this.replyMsg(msg);
     }, this.myService.getDelayTime() * 1000);
 
-    return `the main process received your message: ${msg}`;
+    return `主进程受到了您的信息: ${msg}`;
   }
 
   @Eipc.Invoke(CHANNELS.openNewWindow)

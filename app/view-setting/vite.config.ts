@@ -5,7 +5,7 @@ import packageJson from './package.json';
 
 const distPath = process.env.EE_DIST_PATH
   ? path.join(process.env.EE_DIST_PATH, packageJson.name) : './dist';
-const port = Number(process.env.EE_PORT_2) || 9527;
+const port = Number(process.env.EE_SETTING_PORT);
 
 // https://vitejs.dev/config/
 export default defineConfig({

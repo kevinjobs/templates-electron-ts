@@ -1,12 +1,11 @@
 import path from 'path';
 import { app, BrowserWindow, App as ElectronApp } from "electron";
+import { MAIN_PAGE, MAIN_PORT } from './constant';
 
 type Middleware = (win: BrowserWindow) => Promise<any>;
 
 class App {
   isDev = process.env["NODE_ENV"] === "development";
-  port = process.env.PORT || 9526;
-  mainPage = './dist/view-home/index.html';
   win = null;
   middles: Middleware[] = [];
 
@@ -68,13 +67,13 @@ class App {
     });
 
     if (this.isDev) {
-      w.loadURL(`http://localhost:${this.port}/`).then().catch(console.error);
+      w.loadURL(`http://localhost:${MAIN_PORT}/`).then().catch(console.error);
       // open the chrome dev tools when in development mode.
       w.webContents.openDevTools();
     } else {
       // 生产环境应使用相对地址
       // 打包后的根目录为 app/
-      w.loadFile(this.mainPage).then().catch(console.error);
+      w.loadFile(MAIN_PAGE).then().catch(console.error);
     }
 
     w.on("closed", () => {

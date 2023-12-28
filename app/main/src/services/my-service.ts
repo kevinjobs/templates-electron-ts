@@ -1,5 +1,7 @@
 import Eipc from "eipc";
 import { createSettingWindow } from "./_window";
+import { SETTING_PAGE, SETTING_PORT } from "src/constant";
+
 @Eipc.Injectable("MyService")
 export class MyService {
   constructor() {
@@ -12,16 +14,16 @@ export class MyService {
 
   public openSettingWindow() {
     const isDev = process.env.NODE_ENV === 'development';
-    const port = process.env.EE_PORT_2 || 9527;
-    const settingPage = './dist/view-setting/index.html';
     const w = createSettingWindow();
 
     if (isDev) {
-      w.loadURL(`http://localhost:${port}/`).then().catch(console.error);
+      w.loadURL(`http://localhost:${SETTING_PORT}/`)
+        .then()
+        .catch(console.error);
     } else {
       // 生产环境应使用相对地址
       // 打包后的根目录为 app/
-      w.loadFile(settingPage).then().catch(console.error);
+      w.loadFile(SETTING_PAGE).then().catch(console.error);
     }
   }
 }

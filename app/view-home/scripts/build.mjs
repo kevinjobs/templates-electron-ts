@@ -4,7 +4,7 @@ import path from 'path';
 const config = path.resolve(__dirname, '../config/webpack.config.js');
 export const distPath =
   process.env.EE_DIST_PATH
-    ? path.join(process.env.EE_DIST_PATH, 'vue-react')
+    ? path.join(process.env.EE_DIST_PATH, 'vue-home')
     : '../dist';
 
 // 删除旧的文件
