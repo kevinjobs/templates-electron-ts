@@ -5,6 +5,9 @@ export type IPC = {
   sendMsg(msg: string): Promise<string>;
   receiveMsg(): Promise<string>;
   openNewWindow(msg: string): Promise<boolean>;
+  closeMainWindow(): Promise<void>;
+  minimizeMainWindow(): Promise<void>;
+  maximizeMainWindow(): Promise<void>;
 }
 
 declare global {
@@ -17,6 +20,9 @@ const IPC_API: IPC = {
   sendMsg,
   receiveMsg,
   openNewWindow,
+  closeMainWindow,
+  minimizeMainWindow,
+  maximizeMainWindow,
 }
 
 contextBridge.exposeInMainWorld("ipc", IPC_API);
@@ -36,4 +42,16 @@ async function receiveMsg():Promise<string> {
 
 async function openNewWindow(msg:string) {
   return await ipcRenderer.invoke(CHANNELS.openNewWindow, msg);
+}
+
+async function closeMainWindow() {
+  return await ipcRenderer.invoke(CHANNELS.closeMainWindow);
+}
+
+async function minimizeMainWindow() {
+  return await ipcRenderer.invoke(CHANNELS.minimizeMainWindow);
+}
+
+async function maximizeMainWindow() {
+  return await ipcRenderer.invoke(CHANNELS.maximizeMainWindow);
 }

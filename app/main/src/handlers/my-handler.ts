@@ -23,6 +23,21 @@ export default class MyHandler {
     return `主进程受到了您的信息: ${msg}`;
   }
 
+  @Eipc.Invoke(CHANNELS.closeMainWindow)
+  public async handleCloseMainWin() {
+    this.myService.closeMainWindow();
+  }
+  
+  @Eipc.Invoke(CHANNELS.minimizeMainWindow)
+  public async handleMinimizeMainWin() {
+    this.myService.minimizeMainWindow();
+  }
+
+  @Eipc.Invoke(CHANNELS.maximizeMainWindow)
+  public async handleMaximizeMainWin() {
+    this.myService.maximizeMainWindow();
+  }
+
   @Eipc.Invoke(CHANNELS.openNewWindow)
   public async handleOpenNewWindow(msg: string): Promise<boolean> {
     if (msg === 'setting') {

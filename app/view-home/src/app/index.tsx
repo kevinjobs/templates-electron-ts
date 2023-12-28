@@ -4,7 +4,12 @@ import HomePage from "@pages/home";
 import NotFound from "@pages/not-found";
 import TestPage from "@pages/test";
 
-import { openNewWindow } from "@api/ipc.api";
+import {
+  openNewWindow,
+  closeMainWindow,
+  minimizeMainWindow,
+  maximizeMainWindow,
+} from "@api/ipc.api";
 import Menu from '@components/menu';
 import Breadcrumb from "@components/bread-crumb";
 import './index.less';
@@ -16,6 +21,29 @@ function App() {
 
   return (
     <div className="electron-template">
+      <div className="title-bar">
+        <div className="title">
+          <span>路径：</span>
+          <span>{location.pathname}</span>
+        </div>
+        <div className="minimize_close">
+          <div
+            id="minimize"
+            className="minimize_close_item"
+            onClick={() => minimizeMainWindow().then()}
+          >-</div>
+          <div
+            id="maximize"
+            className="minimize_close_item"
+            onClick={() => maximizeMainWindow().then()}
+          >□</div>
+          <div
+            id="close"
+            className="minimize_close_item"
+            onClick={() => closeMainWindow().then()}
+          >×</div>
+        </div>
+      </div>
       <div className="left-menu">
         <Menu>
           <Menu.Item title="首页" key={1} to="page/home" />
@@ -26,8 +54,9 @@ function App() {
       </div>
       <div className="center-main">
         <div className="location-path">
-          <span>路径：</span>
-          <span><Breadcrumb items={items} /></span>
+          <div>
+            <span><Breadcrumb items={items} /></span>
+          </div>
         </div>
         <div className="router-container">
           <Routes>

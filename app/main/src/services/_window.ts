@@ -7,7 +7,7 @@ export function createSettingWindow() {
     height: 600,
     resizable: false,
     // movable: true,
-    // frame: true,
+    // frame: false,
     // transparent: true,
     webPreferences: {
       // import and export the ipc method in preload process.

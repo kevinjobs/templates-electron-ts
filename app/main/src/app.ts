@@ -6,7 +6,7 @@ type Middleware = (win: BrowserWindow) => Promise<any>;
 
 class App {
   isDev = process.env["NODE_ENV"] === "development";
-  win = null;
+  win: BrowserWindow = null;
   middles: Middleware[] = [];
 
   constructor(private electronApp: ElectronApp) {
@@ -50,9 +50,9 @@ class App {
     const w = new BrowserWindow({
       width: 1000,
       height: 600,
-      resizable: true,
-      // movable: true,
-      // frame: true,
+      // resizable: true,
+      movable: true,
+      frame: false,
       // transparent: true,
       webPreferences: {
         // import and export the ipc method in preload process.

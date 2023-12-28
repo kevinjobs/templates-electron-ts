@@ -1,11 +1,35 @@
 import Eipc from "eipc";
 import { createSettingWindow } from "./_window";
 import { SETTING_PAGE, SETTING_PORT } from "src/constant";
+import { myapp } from "src/app";
 
 @Eipc.Injectable("MyService")
 export class MyService {
   constructor() {
     // do nothing
+  }
+
+  /**
+   * 关闭主窗口
+   */
+  public closeMainWindow() {
+    myapp.win.close();
+  }
+
+  /**
+   * 最小化主窗口
+   */
+  public minimizeMainWindow() {
+    myapp.win.minimize();
+  }
+
+  /**
+   * 最大化主窗口
+   */
+  public maximizeMainWindow() {
+    if (myapp.win.isMaximized()) {
+      myapp.win.unmaximize();
+    } else myapp.win.maximize();
   }
 
   public getDelayTime(): number {
