@@ -23,8 +23,8 @@ function App() {
     <div className="electron-template">
       <div className="title-bar">
         <div className="title">
-          <span>路径：</span>
-          <span>{location.pathname}</span>
+          <span>{document.title}</span>
+          <span>{'[' + location.pathname + ']'}</span>
         </div>
         <div className="minimize_close">
           <div

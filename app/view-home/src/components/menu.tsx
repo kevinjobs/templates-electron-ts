@@ -30,8 +30,9 @@ function Item({title, key, icon, onClick, onHover, to}: MenuItemProps) {
     } else {
       if (to) {
         nav(to);
+        document.title = title;
       }
-    }
+    }    
   }
 
   const handleMouseEnter = () => {
